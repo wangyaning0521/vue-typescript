@@ -1,9 +1,15 @@
 <template>
+    
   <div class="home">
+      <div id="nav">
+        <router-link to="/index">Home</router-link> |
+        <router-link to="/list">About</router-link>
+      </div>
       {{activeListItemName}}
       {{activeList}}
       <button @click='changeList(2222222)'>添加</button>
       <Hello-world @on-click='clickBtn' title='asddddd' msg='阿萨德阿萨德' ref='HelloWorld'></Hello-world>
+      <router-view/>
   </div>
 </template>
 
@@ -12,7 +18,6 @@ import { Component, Vue, Watch, Provide } from "vue-property-decorator";
 import FormValidateMixin from "@/mixins/mixin.ts";
 import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
 import axios from "axios";
-
 
 @Component({
   components: {
@@ -24,7 +29,6 @@ export default class Home extends Vue {
   /**
    * @event 变量
    */
-
   @Provide()
   activeListItemName: number = 222;
   @Provide()
@@ -39,7 +43,7 @@ export default class Home extends Vue {
     console.log("newVal", newVal, "oldVal", oldVal);
   }
 
-  @Watch("$route")
+  @Watch("$route.name")
   fetchdata(to: any, from: any) {
     console.log("newVal", to, "oldVal", from);
   }
@@ -47,7 +51,7 @@ export default class Home extends Vue {
    * @event 初始化
    */
   mounted() {
-    console.log(this);
+    console.log(this.$route.name);
     axios({
       method: "get",
       url: `/api/qthl-wf-busi/website/home/getMonth/6`
