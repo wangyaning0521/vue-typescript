@@ -1,6 +1,6 @@
 <template>
   <div class="user-avator-dropdown">
-    <Dropdown @on-click="handleClick">
+    <Dropdown>
       <Avatar :src="userAvator"/>
       <Icon :size="18" type="md-arrow-dropdown"></Icon>
       <DropdownMenu slot="list">
@@ -11,9 +11,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Inject, Emit } from "vue-property-decorator";
+import {  Vue } from "vue-property-decorator";
 
-@Component({})
+
 export default class wynHeader extends Vue {
     userAvator : string = 'https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png'
 }

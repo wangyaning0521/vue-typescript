@@ -3,7 +3,7 @@
         <div class="logo">
             <img src="../../assets/logo.jpg" alt="">
         </div>
-        <Menu :theme="themeColor">
+        <Menu :theme="themeColor" @on-select='MenuChange'>
             <!-- 导航 -->
             <Submenu 
                 v-for='(item,index) in Submenu' 
@@ -62,9 +62,7 @@
 <script lang="ts">
     import {
         Component,
-        Prop,
         Vue,
-        Inject,
         Emit
     } from "vue-property-decorator";
 
@@ -76,11 +74,17 @@
                 index: 1,
                 Icon: 'ios-analytics',
                 menu: [{
-                        name: '1-1',
+                        name: {
+                            index    :'1-1',
+                            menuUrl  :'/contractPage'
+                        },
                         menuName: '合同管理'
                     },
                     {
-                        name: '1-2',
+                        name: {
+                            index    :'1-2',
+                            menuUrl  :'/projectPage'
+                        },
                         menuName: '项目管理'
                     },
                 ]
@@ -90,22 +94,34 @@
                 index: 2,
                 Icon: 'ios-analytics',
                 menu: [{
-                        name: '2-1',
+                        name: {
+                            index    :'2-1',
+                            menuUrl  :'/companyPage'
+                        },
                         menuName: '单位账号',
                     },
                     {
-                        name: '2-2',
+                        name: {
+                            index    :'2-2',
+                            menuUrl  :'/userPage'
+                        },
                         menuName: '个人客户',
                     },
                     {
                         title: '个人更多信息',
                         index: 3,
                         children: [{
-                                name: '3-1',
+                                name: {
+                                    index    :'3-1',
+                                    menuUrl  :'/SuperAdmin'
+                                },
                                 menuName: '超级管理员',
                             },
                             {
-                                name: '3-2',
+                                name: {
+                                    index    :'3-2',
+                                    menuUrl  :'/customerService'
+                                },
                                 menuName: '前道客服',
                             }
                         ]
@@ -113,6 +129,12 @@
                 ]
             }
         ]
+
+        /** 
+        *   @event 点击路由跳转
+        */
+        @Emit('on-select')
+        MenuChange( val: object ){}
     }
 </script>
 
