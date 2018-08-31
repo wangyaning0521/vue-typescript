@@ -1,20 +1,20 @@
 /**
     @event vue配置
 */
-import Vue    from "vue";
-import App    from "./App.vue";
+import Vue from "vue";
+import App from "./App.vue";
 import router from "./router/index";
-import store  from "./store";
+import store from "./store";
 import "./registerServiceWorker";
 
 /**
     @event 辅助配置
 */
-import iview           from 'iview'
-import axiosPlug       from './lib/http.ts'
+import iview from "iview";
+import axiosPlug from "./lib/http";
 Vue.use(iview);
 Vue.use(axiosPlug);
-import './assets/common.less'
+import "./assets/common.less";
 
 Vue.config.productionTip = false;
 
