@@ -1,43 +1,15 @@
 <template>
 
     <div class="home">
-        <!-- <Layout>
-            <Header>Header</Header>
-            <Layout>
-                <Sider hide-trigger>
-                    <div id="nav">
-                        <router-link to="/index">Home</router-link> |
-                        <router-link to="/list">About</router-link>
-                    </div>
-                </Sider>
-                <Content>
-                    
-                </Content>
-            </Layout>
-        </Layout> -->
         <Layout>
             <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed">
-                <Menu active-name="1-2" theme="dark" width="auto" :class="menuitemClasses">
-                    <MenuItem name="1-1">
-                        <Icon type="ios-navigate"></Icon>
-                        <span>Option 1</span>
-                    </MenuItem>
-                    <MenuItem name="1-2">
-                        <Icon type="ios-search"></Icon>
-                        <span>Option 2</span>
-                    </MenuItem>
-                    <MenuItem name="1-3">
-                        <Icon type="ios-settings"></Icon>
-                        <span>Option 3</span>
-                    </MenuItem>
-                </Menu>
+                <wyn-sider></wyn-sider>
             </Sider>
             <Layout>
                 <Header :style="{padding: 0}" class="layout-header-bar">
                     <div class='layout-header-Icon'>
                         <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon>
                     </div>
-                    
                     <wyn-header></wyn-header>
                 </Header>
                 <Content :style="{margin: '20px', background: '#fff', minHeight: '260px'}">
@@ -45,12 +17,6 @@
                 </Content>
             </Layout>
         </Layout>
-        
-        <!-- {{activeListItemName}}
-        {{activeList}}
-        <button @click='changeList(2222222)'>添加</button>
-        <Hello-world @on-click='clickBtn' title='asddddd' msg='阿萨德阿萨德' ref='HelloWorld'></Hello-world> -->
-        
     </div>
 </template>
 
@@ -64,12 +30,14 @@
     import FormValidateMixin from "@/mixins/mixin.ts";
     import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
     import wynHeader from "@/components/main/wynHeader.vue";
+    import wynSider from "@/components/main/wynSider.vue";
     import axios from "axios";
 
     @Component({
         components: {
             HelloWorld,
-            wynHeader
+            wynHeader,
+            wynSider
         },
         mixins: [FormValidateMixin]
     })
@@ -176,6 +144,11 @@
             width:100%;
             flex:1;
         }
+    }
+    .ivu-layout-sider{
+        width: 240px!important;
+        min-width: 240px!important;
+        max-width: 240px!important;
     }
     .layout-header-bar{
         background: #fff;

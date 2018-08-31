@@ -14,7 +14,7 @@
 import { Component, Prop, Vue, Inject, Emit } from "vue-property-decorator";
 
 @Component({})
-export default class HelloWorld extends Vue {
+export default class wynHeader extends Vue {
     userAvator : string = 'https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png'
 }
 </script>
