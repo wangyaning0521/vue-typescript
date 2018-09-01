@@ -10,11 +10,11 @@
                 <Header :style="{padding: 0}" class="layout-header-bar">
                     <div class='layout-header-Icon'>
                         <Icon :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon>
-                        <ul>
-                            <li v-for='(item,index) in navigation' :key='index'>
-                                {{item.name}}
-                            </li>
-                        </ul>
+                        <Breadcrumb>
+                            <BreadcrumbItem v-for='(item,index) in navigation' :key='index'>
+                                <Icon :type='item.Icon'></Icon> {{item.name}}
+                            </BreadcrumbItem>
+                        </Breadcrumb>
                     </div>
                     <wyn-header></wyn-header>
                 </Header>
@@ -51,6 +51,14 @@ export default class Home extends Vue {
    * @event 初始化
    */
   mounted() {}
+  created() {
+      if(sessionStorage.getItem('userInfo') == null){
+          this.$Message.warning('请先登陆！')
+          this.$router.push({
+                name: 'Login'
+            });
+      }
+  }
   /**
    * @event 计算属性
    */
@@ -80,12 +88,10 @@ export default class Home extends Vue {
   display: flex;
   .layout-header-Icon {
     width: 500px;
+    display: flex;
     .ivu-icon{
         display: inline-block;
-    }
-    ul{
-        display: inline-block;
-        width:300px;
+        margin: 22px 20px!important;
     }
   }
   .user-avator-dropdown {

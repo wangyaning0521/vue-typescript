@@ -13,6 +13,8 @@ const router : any = new Router({
 
 router.beforeEach(( to : any, from: any, next: any) => {
     
+    if( to.fullPath == '/'  || to.fullPath == '/login') next()
+    
     let navigation : any = []
     Submenu.forEach((item)=>{
         item.menu.forEach( ( nav:any ) =>{
@@ -21,7 +23,7 @@ router.beforeEach(( to : any, from: any, next: any) => {
                 
                 navigation = navigation.concat([
                     { name:item.title , Icon:item.Icon },
-                    { name:nav.menuName , Icon:item.Icon }
+                    { name:nav.menuName , Icon:nav.Icon }
                 ])
 
             }else if ( nav.children ) {
@@ -32,7 +34,7 @@ router.beforeEach(( to : any, from: any, next: any) => {
                       
                         navigation = navigation.concat([
                             { name:item.title , Icon:item.Icon },
-                            { name:nav.title , Icon:item.Icon },
+                            { name:nav.title , Icon:nav.Icon },
                             { name:threeLevel.menuName , Icon:threeLevel.Icon }
                         ])
 
