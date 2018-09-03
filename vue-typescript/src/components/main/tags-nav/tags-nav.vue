@@ -25,7 +25,7 @@
             <div ref="scrollBody" class="scroll-body" :style="{left: tagBodyLeft + 'px'}">
                 <transition-group name="taglist-moving-animation">
                     <Tag ref="tagsPage" type="dot" v-for="(item, index) in list" :key="`tag-nav-${index}`" :name="item.name"
-                        @on-close="handleClose(item)" @click.native="handleClick(item)" :closable="item.name !== 'home'"
+                        @on-close="handleClose(item)" @click.native="handleClick(item)" :closable="item.name !== 'index'"
                         :color="isCurrentTag(item) ? 'primary' : 'default'">{{showTitleInside(item)}}</Tag>
                 </transition-group>
             </div>
@@ -98,12 +98,12 @@
             },
             handleTagsOption(type) {
                 if (type === 'close-all') {
-                    // 关闭所有，除了home
-                    let res = this.list.filter(item => item.name === 'home')
+                    // 关闭所有，除了index
+                    let res = this.list.filter(item => item.name === 'index')
                     this.$emit('on-close', res, 'all')
                 } else {
                     // 关闭除当前页和home页的其他页
-                    let res = this.list.filter(item => routeEqual(this.currentRouteObj, item) || item.name === 'home')
+                    let res = this.list.filter(item => routeEqual(this.currentRouteObj, item) || item.name === 'index')
                     this.$emit('on-close', res, 'others', this.currentRouteObj)
                     setTimeout(() => {
                         this.getTagElementByName(this.currentRouteObj.name)

@@ -3,7 +3,7 @@
         <div class="logo">
             <img src="../../../assets/logo.jpg" alt="">
         </div>
-        <Menu :theme="themeColor" @on-select='MenuChange'>
+        <Menu :theme="themeColor" :active-name="activeName" @on-select='MenuChange'>
             <Submenu v-for='(item,index) in Submenu' :key='index' :name='item.index'>
                 <template slot="title">
                     <Icon :type="item.Icon" />
@@ -45,19 +45,16 @@ import Submenu from "@/lib/menu";
 
 
 @Component({})
-export default class wynSider extends Vue {
+export default class Sider extends Vue {
     
-
+  activeName: string ='';
   themeColor: string = "dark";
   Submenu: any = Submenu
 
   /**
    *   @event 点击路由跳转
    */
-  // @Emit('on-select')
   MenuChange(val: any) {
-    // console.log( this )
-    // this.$emit("on-select", val);
     this.$router.push(val);
   }
 }

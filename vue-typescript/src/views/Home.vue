@@ -3,7 +3,7 @@
     <div class="home">
         <Layout>
             <Sider ref="side1" hide-trigger collapsible :collapsed-width="78">
-                <tags-sider @on-select='selectSider'></tags-sider>
+                <tags-sider ref='tagsSider' @on-select='selectSider'></tags-sider>
             </Sider>
             <Layout>
 
@@ -21,7 +21,7 @@
 
                 <Header style="padding: 0;line-height:32px;height:32px;" class="layout-header-bar">
                     <div class='tag-nav-wrapper'>
-                        <tags-nav  :value="$route"  :list="tagNavList"></tags-nav>
+                        <tags-nav  :value="$route"  @input="handleClick" :list="tagNavList"  @on-close="handleCloseTag"></tags-nav>
                     </div>
                 </Header>
                 
@@ -43,8 +43,8 @@
     } from "vue-property-decorator";
     import tagsHeader from "@/components/main/tags-header/index";
     import tagsSider  from "@/components/main/tags-sider/index";
-    import tagsNav  from "@/components/main/tags-nav/index";
-    import { getNewTagList } from '@/lib/util';
+    import tagsNav    from "@/components/main/tags-nav/index";
+    import { getNewTagList, routeEqual, getNextRoute } from '@/lib/util';
 
     import {
         State,
@@ -77,6 +77,7 @@
          * @event 初始化
          */
         mounted() {
+            this.SET_TAG_NAVLIST()
         }
         created() {
             if (sessionStorage.getItem('userInfo') == null) {
@@ -95,13 +96,50 @@
         @Watch("$route")
         fetchdata( newRoute ) {
             this.SET_TAG_NAVLIST(getNewTagList(this.tagNavList, newRoute))
-            console.log(this.tagNavList)
         }
         /**
          * @event 事件
          */
         selectSider(val: string) {
 
+        }
+        turnToPage (route) {
+            // let { name : any = null, params : any = null, query : any = null } = {}
+            let name   : any,
+                params :  any,
+                query  :  any;
+            if (typeof route === 'string') name = route
+            else {
+                name = route.name
+                params = route.params
+                query = route.query
+            }
+            this.$router.push({
+                name,
+                params,
+                query
+            })
+        }
+        handleCloseTag (res, type, route) {
+            let openPath = ''
+            if (type === 'all') {
+                this.turnToPage('index')
+                openPath = '/index'
+            } else if (routeEqual(this.$route, route)) {
+                if (type === 'others') {
+                    openPath = route.path
+                } else {
+                    const nextRoute = getNextRoute(this.tagNavList, route)
+                    this.$router.push(nextRoute)
+                    openPath = nextRoute.path
+                }
+            }
+            this.SET_TAG_NAVLIST(res)
+            console.log(openPath)
+            if( openPath ) this.$refs.tagsSider.activeName = openPath
+        }
+        handleClick (item) {
+            this.turnToPage(item)
         }
     }
 </script>

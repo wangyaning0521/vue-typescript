@@ -16,7 +16,7 @@ import { Component, Prop, Vue, Inject, Emit } from "vue-property-decorator";
 
 @Component({})
 
-export default class wynHeader extends Vue {
+export default class Header extends Vue {
 
     userName : string = ''
 

@@ -15,7 +15,9 @@ export default new Vuex.Store({
             }
         }
     ],
-    navigation: []
+    navigation: [
+        { name:'首页' , Icon:'md-bicycle' }
+    ]
   },
   mutations: {
     [types.SET_TAG_NAVLIST](state :any, list :any) {
@@ -31,7 +33,7 @@ export default new Vuex.Store({
         if (!routeHasExist(state.tagNavList, route)) {
             if (type === 'push') state.tagNavList.push(route)
             else {
-                if (route.name === 'home') state.tagNavList.unshift(route)
+                if (route.name === 'index') state.tagNavList.unshift(route)
                 else state.tagNavList.splice(1, 0, route)
             }
             setTagNavListInLocalstorage([...state.tagNavList])

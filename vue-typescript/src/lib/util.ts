@@ -33,7 +33,21 @@ export const getNewTagList = (list: any, newRoute: any) => {
     })
     return newList
 }
-
+/**
+ * @param {Array} list 标签列表
+ * @param {String} name 当前关闭的标签的name
+ */
+export const getNextRoute = (list:any, route:any) => {
+    let res = {}
+    if (list.length === 2) {
+      res = getHomeRoute(list)
+    } else {
+      const index = list.findIndex((item :any)=> routeEqual(item, route))
+      if (index === list.length - 1) res = list[list.length - 2]
+      else res = list[index + 1]
+    }
+    return res
+  }
 /**
  * @description 本地存储和获取标签导航列表
  */
@@ -45,8 +59,18 @@ export const setTagNavListInLocalstorage = (list: any) => {
  * @returns {Array} 其中的每个元素只包含路由原信息中的name, path, meta三项
  */
 export const getTagNavListFromLocalstorage = () => {
-    const list = localStorage.tagNaveList
-    return list ? JSON.parse(list) : []
+    
+    const list = JSON.parse(localStorage.tagNaveList)
+    
+    return list.length  ? list : [
+        {
+            name: "index",
+            path: "/index",
+            meta:{
+                title:'首页'
+            }
+        }
+    ]
 }
 
 /**
@@ -95,4 +119,23 @@ const objEqual = (obj1:any, obj2:any) => {
     /* eslint-disable-next-line */
     else return !keysArr1.some(key => obj1[key] != obj2[key])
 }
+/**
+ * @param {Array} routers 路由列表数组
+ * @description 用于找到路由列表中name为home的对象
+ */
+export const getHomeRoute = routers => {
+    let i = -1
+    let len = routers.length
+    let homeRoute = {}
+    while (++i < len) {
+      let item = routers[i]
+      if (item.children && item.children.length) {
+        let res = getHomeRoute(item.children)
+        if (res.name) return res
+      } else {
+        if (item.name === 'index') homeRoute = item
+      }
+    }
+    return homeRoute
+  }
 export default util;

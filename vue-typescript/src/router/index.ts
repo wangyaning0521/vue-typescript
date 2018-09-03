@@ -12,39 +12,44 @@ const router : any = new Router({
 });
 
 router.beforeEach(( to : any, from: any, next: any) => {
-    
-    if( to.fullPath == '/'  || to.fullPath == '/login') next()
-    
     let navigation : any = []
-    Submenu.forEach((item)=>{
-        item.menu.forEach( ( nav:any ) =>{
-            
-            if( nav.name &&  (to.fullPath == nav.name.menuUrl)){
+    if( to.fullPath == '/'  || to.fullPath == '/login') next()
+    else if(to.fullPath == '/index'){
+        navigation = navigation.concat([
+            { name:'首页' , Icon:'md-bicycle' }
+        ])
+    }else{
+        Submenu.forEach((item)=>{
+            item.menu.forEach( ( nav:any ) =>{
                 
-                navigation = navigation.concat([
-                    { name:item.title , Icon:item.Icon },
-                    { name:nav.menuName , Icon:nav.Icon }
-                ])
-
-            }else if ( nav.children ) {
-
-                nav.children.forEach( ( threeLevel:any ) =>{
+                if( nav.name &&  (to.fullPath == nav.name.menuUrl)){
                     
-                    if( threeLevel.name.menuUrl == to.fullPath ){
-                      
-                        navigation = navigation.concat([
-                            { name:item.title , Icon:item.Icon },
-                            { name:nav.title , Icon:nav.Icon },
-                            { name:threeLevel.menuName , Icon:threeLevel.Icon }
-                        ])
-
-                    }
-
-                })
-
-            }
+                    navigation = navigation.concat([
+                        { name:item.title , Icon:item.Icon },
+                        { name:nav.menuName , Icon:nav.Icon }
+                    ])
+    
+                }else if ( nav.children ) {
+    
+                    nav.children.forEach( ( threeLevel:any ) =>{
+                        
+                        if( threeLevel.name.menuUrl == to.fullPath ){
+                          
+                            navigation = navigation.concat([
+                                { name:item.title , Icon:item.Icon },
+                                { name:nav.title , Icon:nav.Icon },
+                                { name:threeLevel.menuName , Icon:threeLevel.Icon }
+                            ])
+    
+                        }
+    
+                    })
+    
+                }
+            })
         })
-    })
+    }
+    
     if( navigation.length ) util.openNewPage( router.app , navigation )
     next()
 })
