@@ -114,6 +114,8 @@
                 params = route.params
                 query = route.query
             }
+            if( route.path )this.$refs.tagsSider.activeName = route.path
+
             this.$router.push({
                 name,
                 params,
