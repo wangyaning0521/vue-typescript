@@ -1,7 +1,6 @@
 <template>
     <div class="customerService">
         <h1>This is an customerService page</h1>
-        {{count}}
     </div>
 </template>
 <script lang='ts'>
@@ -19,14 +18,14 @@
     } from "vuex-class";
     @Component({})
     export default class customerService extends Vue {
-        @State
-        count: number;
-        @Mutation
-        add: () => void;
-        @Action
-        increment: () => void;
-        mounted() {
-            this.add();
-        }
+        // @State
+        // count: number;
+        // @Mutation
+        // add: () => void;
+        // @Action
+        // increment: () => void;
+        // mounted() {
+        //     this.add();
+        // }
     }
 </script>

@@ -1,7 +1,6 @@
 <template>
     <div class="userPage">
         <h1>This is an userPage page</h1>
-        {{count}}
     </div>
 </template>
 <script lang='ts'>
@@ -19,14 +18,14 @@
     } from "vuex-class";
     @Component({})
     export default class userPage extends Vue {
-        @State
-        count: number;
-        @Mutation
-        add: () => void;
-        @Action
-        increment: () => void;
-        mounted() {
-            this.add();
-        }
+        // @State
+        // count: number;
+        // @Mutation
+        // add: () => void;
+        // @Action
+        // increment: () => void;
+        // mounted() {
+        //     this.add();
+        // }
     }
 </script>

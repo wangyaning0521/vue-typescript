@@ -6,7 +6,6 @@
                 <wyn-sider @on-select='selectSider'></wyn-sider>
             </Sider>
             <Layout>
-                
                 <Header :style="{padding: 0}" class="layout-header-bar">
                     <div class='layout-header-Icon'>
                         <Icon :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon>
@@ -18,7 +17,7 @@
                     </div>
                     <wyn-header></wyn-header>
                 </Header>
-                <Content :style="{margin: '20px', background: '#fff', minHeight: '260px'}">
+                <Content :style="{margin: '20px', background: '#fff', minHeight: '260px'}">{{tagNavList}}
                     <router-view></router-view>
                 </Content>
             </Layout>
@@ -27,123 +26,159 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import wynHeader          from "@/components/main/wynHeader.vue";
-import wynSider           from "@/components/main/wynSider.vue";
-import {
-        State
+    import {
+        Component,
+        Vue,
+        Watch
+    } from "vue-property-decorator";
+    import wynHeader from "@/components/main/wynHeader.vue";
+    import wynSider  from "@/components/main/wynSider.vue";
+    import { getNewTagList } from '@/lib/util';
+
+    import {
+        State,
+        Action,
+        Getter,
+        Mutation
     } from "vuex-class";
 
-@Component({
-  components: {
-    wynHeader,
-    wynSider
-  }
-})
+    @Component({
+        components: {
+            wynHeader,
+            wynSider
+        }
+    })
 
-export default class Home extends Vue {
-  /**
-   * @event 变量
-   */
-  @State  
-  navigation: Array<number>;
-  /**
-   * @event 初始化
-   */
-  mounted() {}
-  created() {
-      if(sessionStorage.getItem('userInfo') == null){
-          this.$Message.warning('请先登陆！')
-          this.$router.push({
-                name: 'Login'
-            });
-      }
-  }
-  /**
-   * @event 计算属性
-   */
+    export default class Home extends Vue {
+        /**
+         * @event 变量
+         */
+        @State
+        navigation: Array < number >;
 
-  /**
-   * @event 事件
-   */
-  selectSider(val: string) {
-    
-  }
-}
+        @State
+        tagNavList: Array < number >;
+
+        @Mutation
+        SET_TAG_NAVLIST: () => void;
+        /**
+         * @event 初始化
+         */
+        mounted() {
+        }
+        created() {
+            if (sessionStorage.getItem('userInfo') == null) {
+                this.$Message.warning('请先登陆！')
+                this.$router.push({
+                    name: 'Login'
+                });
+            }
+        }
+        /**
+         * @event 计算属性
+         */
+        /**
+        * @event 路由监控
+        */
+        @Watch("$route")
+        fetchdata( newRoute ) {
+            this.SET_TAG_NAVLIST(getNewTagList(this.tagNavList, newRoute))
+        }
+        /**
+         * @event 事件
+         */
+        selectSider(val: string) {
+
+        }
+    }
 </script>
 <style lang='less'>
-.home,
-.ivu-layout {
-  width: 100%;
-  height: 100%;
-}
-.layout {
-  border: 1px solid #d7dde4;
-  background: #f5f7f9;
-  position: relative;
-  border-radius: 4px;
-  overflow: hidden;
-}
-.ivu-layout-header {
-  display: flex;
-  .layout-header-Icon {
-    width: 500px;
-    display: flex;
-    .ivu-icon{
-        display: inline-block;
-        margin: 22px 20px!important;
+    .home,
+    .ivu-layout {
+        width: 100%;
+        height: 100%;
     }
-  }
-  .user-avator-dropdown {
-    width: 100%;
-    flex: 1;
-  }
-}
-.ivu-layout-sider {
-  width: 240px !important;
-  min-width: 240px !important;
-  max-width: 240px !important;
-}
-.layout-header-bar {
-  background: #fff;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-}
-.layout-logo-left {
-  width: 90%;
-  height: 30px;
-  background: #5b6270;
-  border-radius: 3px;
-  margin: 15px auto;
-}
-.menu-icon {
-  transition: all 0.3s;
-}
-.rotate-icon {
-  transform: rotate(-90deg);
-}
-.menu-item span {
-  display: inline-block;
-  overflow: hidden;
-  width: 69px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  vertical-align: bottom;
-  transition: width 0.2s ease 0.2s;
-}
-.menu-item i {
-  transform: translateX(0px);
-  transition: font-size 0.2s ease, transform 0.2s ease;
-  vertical-align: middle;
-  font-size: 16px;
-}
-.collapsed-menu span {
-  width: 0px;
-  transition: width 0.2s ease;
-}
-.collapsed-menu i {
-  transform: translateX(5px);
-  transition: font-size 0.2s ease 0.2s, transform 0.2s ease 0.2s;
-  vertical-align: middle;
-  font-size: 22px;
-}
+
+    .layout {
+        border: 1px solid #d7dde4;
+        background: #f5f7f9;
+        position: relative;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .ivu-layout-header {
+        display: flex;
+
+        .layout-header-Icon {
+            width: 500px;
+            display: flex;
+
+            .ivu-icon {
+                display: inline-block;
+                margin: 22px 20px !important;
+            }
+        }
+
+        .user-avator-dropdown {
+            width: 100%;
+            flex: 1;
+        }
+    }
+
+    .ivu-layout-sider {
+        width: 240px !important;
+        min-width: 240px !important;
+        max-width: 240px !important;
+    }
+
+    .layout-header-bar {
+        background: #fff;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    }
+
+    .layout-logo-left {
+        width: 90%;
+        height: 30px;
+        background: #5b6270;
+        border-radius: 3px;
+        margin: 15px auto;
+    }
+
+    .menu-icon {
+        transition: all 0.3s;
+    }
+
+    .rotate-icon {
+        transform: rotate(-90deg);
+    }
+
+    .menu-item span {
+        display: inline-block;
+        overflow: hidden;
+        width: 69px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        vertical-align: bottom;
+        transition: width 0.2s ease 0.2s;
+    }
+
+    .menu-item i {
+        transform: translateX(0px);
+        transition: font-size 0.2s ease, transform 0.2s ease;
+        vertical-align: middle;
+        font-size: 16px;
+    }
+
+    .collapsed-menu span {
+        width: 0px;
+        transition: width 0.2s ease;
+    }
+
+    .collapsed-menu i {
+        transform: translateX(5px);
+        transition: font-size 0.2s ease 0.2s, transform 0.2s ease 0.2s;
+        vertical-align: middle;
+        font-size: 22px;
+    }
 </style>
