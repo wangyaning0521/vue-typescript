@@ -7,12 +7,11 @@ import {
 
 let util = {
     openNewPage : (vm: any, navigation: Array < number > ) => {
-        // console.log(Object.keys(vm))
-        console.log(vm)
         if (vm.$store) vm.$store.commit('NEW_PAGE', navigation);
     }
 };
 
+export const showTitle = (item:any) => item.meta.title
 
 /**
  * @param {*} list 现有标签导航列表

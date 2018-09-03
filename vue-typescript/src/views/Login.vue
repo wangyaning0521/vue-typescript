@@ -66,7 +66,7 @@
                 if (valid) {
                     sessionStorage.setItem('userInfo', JSON.stringify(this.form));
                     this.$router.push({
-                        name: 'contractPage'
+                        name: 'index'
                     });
                 }
             });

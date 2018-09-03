@@ -6,6 +6,7 @@
                 <wyn-sider @on-select='selectSider'></wyn-sider>
             </Sider>
             <Layout>
+
                 <Header :style="{padding: 0}" class="layout-header-bar">
                     <div class='layout-header-Icon'>
                         <Icon :style="{margin: '0 20px'}" type="md-menu" size="24"></Icon>
@@ -17,9 +18,18 @@
                     </div>
                     <wyn-header></wyn-header>
                 </Header>
-                <Content :style="{margin: '20px', background: '#fff', minHeight: '260px'}">{{tagNavList}}
+
+                <Header style="padding: 0;line-height:32px;height:32px;" class="layout-header-bar">
+                    <div class='tag-nav-wrapper'>
+                        <tags-nav  :value="$route"  :list="tagNavList"></tags-nav>
+                    </div>
+                </Header>
+                
+                
+                <Content :style="{margin: '20px', background: '#fff', minHeight: '260px'}">
                     <router-view></router-view>
                 </Content>
+
             </Layout>
         </Layout>
     </div>
@@ -33,6 +43,7 @@
     } from "vue-property-decorator";
     import wynHeader from "@/components/main/wynHeader.vue";
     import wynSider  from "@/components/main/wynSider.vue";
+    import tagsNav  from "@/components/main/tags-nav/index";
     import { getNewTagList } from '@/lib/util';
 
     import {
@@ -45,7 +56,8 @@
     @Component({
         components: {
             wynHeader,
-            wynSider
+            wynSider,
+            tagsNav
         }
     })
 
@@ -83,6 +95,7 @@
         @Watch("$route")
         fetchdata( newRoute ) {
             this.SET_TAG_NAVLIST(getNewTagList(this.tagNavList, newRoute))
+            console.log(this.tagNavList)
         }
         /**
          * @event 事件
@@ -180,5 +193,12 @@
         transition: font-size 0.2s ease 0.2s, transform 0.2s ease 0.2s;
         vertical-align: middle;
         font-size: 22px;
+    }
+    .tag-nav-wrapper{
+        padding: 0;
+        width:100%;
+        height: 40px;
+        background: #F0F0F0;
+        overflow: hidden;
     }
 </style>

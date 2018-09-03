@@ -2,6 +2,7 @@
  *  @event webpackChunk 打包分块
  */
 const Home = () => import(/* webpackChunkName: "Home" */ "@/views/Home.vue");
+const index = () => import(/* webpackChunkName: "index" */ "@/views/index.vue");
 const Login = () => import(/* webpackChunkName: "Login" */ "@/views/Login.vue");
 const contractPage = () =>
   import(/* webpackChunkName: "contractPage" */ "@/views/business/contractPage.vue");
@@ -28,6 +29,14 @@ export default [
     },
     component: Home,
     children: [
+        {
+            name: "index",
+            path: "/index",
+            meta: {
+              title: "合同管理"
+            },
+            component: index
+          },
       {
         name: "contractPage",
         path: "/contractPage",

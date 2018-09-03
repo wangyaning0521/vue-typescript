@@ -6,7 +6,15 @@ import * as types from './mutation-types'
 import { setTagNavListInLocalstorage,  getTagNavListFromLocalstorage, routeHasExist } from '@/lib/util'
 export default new Vuex.Store({
   state: {
-    tagNavList: [],
+    tagNavList: [
+        {
+            name: "index",
+            path: "/index",
+            meta:{
+                title:'首页'
+            }
+        }
+    ],
     navigation: []
   },
   mutations: {
