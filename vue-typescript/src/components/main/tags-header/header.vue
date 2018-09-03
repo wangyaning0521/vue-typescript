@@ -42,11 +42,5 @@ export default class wynHeader extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
-.user-avator-dropdown {
-  display: inline-block;
-  .ivu-dropdown {
-    float: right;
-    margin-right: 50px;
-  }
-}
+    @import './header.less';
 </style>

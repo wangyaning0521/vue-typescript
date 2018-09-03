@@ -3,7 +3,7 @@
     <div class="home">
         <Layout>
             <Sider ref="side1" hide-trigger collapsible :collapsed-width="78">
-                <wyn-sider @on-select='selectSider'></wyn-sider>
+                <tags-sider @on-select='selectSider'></tags-sider>
             </Sider>
             <Layout>
 
@@ -16,7 +16,7 @@
                             </BreadcrumbItem>
                         </Breadcrumb>
                     </div>
-                    <wyn-header></wyn-header>
+                    <tags-header></tags-header>
                 </Header>
 
                 <Header style="padding: 0;line-height:32px;height:32px;" class="layout-header-bar">
@@ -41,8 +41,8 @@
         Vue,
         Watch
     } from "vue-property-decorator";
-    import wynHeader from "@/components/main/wynHeader.vue";
-    import wynSider  from "@/components/main/wynSider.vue";
+    import tagsHeader from "@/components/main/tags-header/index";
+    import tagsSider  from "@/components/main/tags-sider/index";
     import tagsNav  from "@/components/main/tags-nav/index";
     import { getNewTagList } from '@/lib/util';
 
@@ -55,8 +55,8 @@
 
     @Component({
         components: {
-            wynHeader,
-            wynSider,
+            tagsHeader,
+            tagsSider,
             tagsNav
         }
     })

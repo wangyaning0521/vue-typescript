@@ -1,7 +1,7 @@
 <template>
     <div class='wynSider'>
         <div class="logo">
-            <img src="../../assets/logo.jpg" alt="">
+            <img src="../../../assets/logo.jpg" alt="">
         </div>
         <Menu :theme="themeColor" @on-select='MenuChange'>
             <Submenu v-for='(item,index) in Submenu' :key='index' :name='item.index'>
@@ -65,37 +65,5 @@ export default class wynSider extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
-.wynSider {
-  height: 100%;
-  position: relative;
-
-  > .ivu-menu {
-    height: 100%;
-    padding: 55px 0 50px 0;
-  }
-
-  &-RadioGroup {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    z-index: 555555555555555555;
-  }
-
-  > .logo {
-    position: absolute;
-    top: 0px;
-    left: 0;
-    z-index: 555555555555555555;
-    height: 64px;
-    padding: 10px;
-    width: 100%;
-
-    > img {
-      display: block;
-      height: 44px;
-      margin: 0 auto;
-      width: auto;
-    }
-  }
-}
+    @import './sider.less';
 </style>
